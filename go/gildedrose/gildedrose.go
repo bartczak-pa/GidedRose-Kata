@@ -21,6 +21,16 @@ func UpdateSellIn(item *Item) {
 	item.SellIn = item.SellIn - 1
 }
 
+func UpdateQualityAfterSellIn(item *Item) {
+	if item.Name == "Aged Brie" {
+		RaiseQualityByNumber(item, 1)
+	} else if item.Name == "Backstage passes to a TAFKAL80ETC concert" {
+		item.Quality = 0
+	} else if item.Name != "Sulfuras, Hand of Ragnaros" {
+		LowerQualityByNumber(item, 1)
+	}
+}
+
 func UpdateQuality(items []*Item) {
 	for i := 0; i < len(items); i++ {
 
@@ -45,17 +55,7 @@ func UpdateQuality(items []*Item) {
 		}
 
 		if items[i].SellIn < 0 {
-			if items[i].Name != "Aged Brie" {
-				if items[i].Name != "Backstage passes to a TAFKAL80ETC concert" {
-					if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-						LowerQualityByNumber(items[i], 1)
-					}
-				} else {
-					items[i].Quality = items[i].Quality - items[i].Quality
-				}
-			} else {
-				RaiseQualityByNumber(items[i], 1)
-			}
+			UpdateQualityAfterSellIn(items[i])
 		}
 	}
 }

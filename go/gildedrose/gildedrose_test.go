@@ -107,3 +107,35 @@ func ExampleUpdateSellIn() {
 	fmt.Println(item.SellIn)
 	// Output: 9
 }
+
+func TextUpdateQualityAfterSellIn(t *testing.T) {
+	tests := []struct {
+		name            string
+		itemName        string
+		initialQuality  int
+		expectedQuality int
+	}{
+		{"Quality decreases by 1", "foo", 10, 9},
+		{"Quality at 0 stays 0", "foo", 0, 0},
+		{"Quality at 50 stays 50", "Aged Brie", 50, 50},
+		{"Quality at 0 stays 0", "Backstage passes to a TAFKAL80ETC concert", 0, 0},
+		{"Quality stays at 80", "Sulfuras, Hand of Ragnaros", 80, 80},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			item := &gildedrose.Item{Name: test.itemName, Quality: test.initialQuality}
+			gildedrose.UpdateQualityAfterSellIn(item)
+			if item.Quality != test.expectedQuality {
+				t.Errorf("%s: Expected quality %d but got %d", test.name, test.expectedQuality, item.Quality)
+			}
+		})
+	}
+}
+
+func ExampleUpdateQualityAfterSellIn() {
+	item := &gildedrose.Item{Name: "foo", Quality: 10}
+	gildedrose.UpdateQualityAfterSellIn(item)
+	fmt.Println(item.Quality)
+	// Output: 9
+}
