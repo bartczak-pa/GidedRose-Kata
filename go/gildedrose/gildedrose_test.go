@@ -1,6 +1,7 @@
 package gildedrose_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/emilybache/gildedrose-refactoring-kata/gildedrose"
@@ -38,4 +39,11 @@ func TestLowerQualityBy1(t *testing.T) {
 			}
 		})
 	}
+}
+
+func ExampleLowerQualityBy1() {
+	item := &gildedrose.Item{Name: "foo", Quality: 10}
+	gildedrose.LowerQualityBy1(item)
+	fmt.Println(item.Quality)
+	// Output: 9
 }
