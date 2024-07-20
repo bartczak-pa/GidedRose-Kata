@@ -49,30 +49,33 @@ func ExampleLowerQualityByNumber() {
 	// Output: 8
 }
 
-func TestRaiseQualityBy1(t *testing.T) {
+func TestRaiseQualityByNumber(t *testing.T) {
 	tests := []struct {
 		name            string
 		initialQuality  int
+		number          int
 		expectedQuality int
 	}{
-		{"Quality increases by 1", 10, 11},
-		{"Quality at 50 stays 50", 50, 50},
+		{"Quality increases by 1", 10, 1, 11},
+		{"Quality increases by 2", 10, 2, 12},
+		{"Quality at 50 stays 50", 50, 1, 50},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			item := &gildedrose.Item{Name: "foo", Quality: test.initialQuality}
-			gildedrose.RaiseQualityBy1(item)
+			gildedrose.RaiseQualityByNumber(item, test.number)
 			if item.Quality != test.expectedQuality {
 				t.Errorf("%s: Expected quality %d but got %d", test.name, test.expectedQuality, item.Quality)
 			}
 		})
 	}
+
 }
 
-func ExampleRaiseQualityBy1() {
+func ExampleRaiseQualityByNumber() {
 	item := &gildedrose.Item{Name: "foo", Quality: 10}
-	gildedrose.RaiseQualityBy1(item)
+	gildedrose.RaiseQualityByNumber(item, 2)
 	fmt.Println(item.Quality)
-	// Output: 11
+	// Output: 12
 }
