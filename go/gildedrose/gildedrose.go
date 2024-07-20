@@ -11,6 +11,12 @@ func LowerQualityBy1(item *Item) {
 	}
 }
 
+func RaiseQualityBy1(item *Item) {
+	if item.Quality < 50 {
+		item.Quality = item.Quality + 1
+	}
+}
+
 func UpdateQuality(items []*Item) {
 	for i := 0; i < len(items); i++ {
 
@@ -19,19 +25,13 @@ func UpdateQuality(items []*Item) {
 				LowerQualityBy1(items[i])
 			}
 		} else {
-			if items[i].Quality < 50 {
-				items[i].Quality = items[i].Quality + 1
-				if items[i].Name == "Backstage passes to a TAFKAL80ETC concert" {
-					if items[i].SellIn < 11 {
-						if items[i].Quality < 50 {
-							items[i].Quality = items[i].Quality + 1
-						}
-					}
-					if items[i].SellIn < 6 {
-						if items[i].Quality < 50 {
-							items[i].Quality = items[i].Quality + 1
-						}
-					}
+			RaiseQualityBy1(items[i])
+			if items[i].Name == "Backstage passes to a TAFKAL80ETC concert" {
+				if items[i].SellIn < 11 {
+					RaiseQualityBy1(items[i])
+				}
+				if items[i].SellIn < 6 {
+					RaiseQualityBy1(items[i])
 				}
 			}
 		}
@@ -50,9 +50,7 @@ func UpdateQuality(items []*Item) {
 					items[i].Quality = items[i].Quality - items[i].Quality
 				}
 			} else {
-				if items[i].Quality < 50 {
-					items[i].Quality = items[i].Quality + 1
-				}
+				RaiseQualityBy1(items[i])
 			}
 		}
 	}
