@@ -5,9 +5,9 @@ type Item struct {
 	SellIn, Quality int
 }
 
-func LowerQualityBy1(item *Item) {
+func LowerQualityByNumber(item *Item, number int) {
 	if item.Quality > 0 {
-		item.Quality = item.Quality - 1
+		item.Quality = item.Quality - number
 	}
 }
 
@@ -22,7 +22,7 @@ func UpdateQuality(items []*Item) {
 
 		if items[i].Name != "Aged Brie" && items[i].Name != "Backstage passes to a TAFKAL80ETC concert" {
 			if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-				LowerQualityBy1(items[i])
+				LowerQualityByNumber(items[i], 1)
 			}
 		} else {
 			RaiseQualityBy1(items[i])
@@ -44,7 +44,7 @@ func UpdateQuality(items []*Item) {
 			if items[i].Name != "Aged Brie" {
 				if items[i].Name != "Backstage passes to a TAFKAL80ETC concert" {
 					if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-						LowerQualityBy1(items[i])
+						LowerQualityByNumber(items[i], 1)
 					}
 				} else {
 					items[i].Quality = items[i].Quality - items[i].Quality
