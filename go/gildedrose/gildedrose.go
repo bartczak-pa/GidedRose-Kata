@@ -17,6 +17,10 @@ func RaiseQualityByNumber(item *Item, number int) {
 	}
 }
 
+func UpdateSellIn(item *Item) {
+	item.SellIn = item.SellIn - 1
+}
+
 func UpdateQuality(items []*Item) {
 	for i := 0; i < len(items); i++ {
 
@@ -37,7 +41,7 @@ func UpdateQuality(items []*Item) {
 		}
 
 		if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-			items[i].SellIn = items[i].SellIn - 1
+			UpdateSellIn(items[i])
 		}
 
 		if items[i].SellIn < 0 {

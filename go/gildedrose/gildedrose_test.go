@@ -79,3 +79,31 @@ func ExampleRaiseQualityByNumber() {
 	fmt.Println(item.Quality)
 	// Output: 12
 }
+
+func TestUpdateSellIn(t *testing.T) {
+	tests := []struct {
+		name            string
+		initialSellIn   int
+		expectedSellIn  int
+		expectedQuality int
+	}{
+		{"SellIn decreases by 1", 10, 9, 10},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			item := &gildedrose.Item{Name: "foo", SellIn: test.initialSellIn, Quality: 10}
+			gildedrose.UpdateSellIn(item)
+			if item.SellIn != test.expectedSellIn {
+				t.Errorf("%s: Expected sellIn %d but got %d", test.name, test.expectedSellIn, item.SellIn)
+			}
+		})
+	}
+}
+
+func ExampleUpdateSellIn() {
+	item := &gildedrose.Item{Name: "foo", SellIn: 10, Quality: 10}
+	gildedrose.UpdateSellIn(item)
+	fmt.Println(item.SellIn)
+	// Output: 9
+}
