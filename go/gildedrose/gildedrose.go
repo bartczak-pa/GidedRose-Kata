@@ -56,6 +56,10 @@ func UpdateBackStagePassesQuality(item *Item) {
 	}
 }
 
+func UpdateConjuredQuality(item *Item) {
+	LowerQualityByNumber(item, 2)
+}
+
 func UpdateQuality(items []*Item) {
 	for i := 0; i < len(items); i++ {
 
@@ -65,6 +69,8 @@ func UpdateQuality(items []*Item) {
 				UpdateBrieQuality(items[i])
 			case "Backstage passes to a TAFKAL80ETC concert":
 				UpdateBackStagePassesQuality(items[i])
+			case "Conjured Mana Cake":
+				UpdateConjuredQuality(items[i])
 			default:
 				LowerQualityByNumber(items[i], 1)
 			}

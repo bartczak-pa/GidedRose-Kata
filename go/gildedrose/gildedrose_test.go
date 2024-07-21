@@ -205,3 +205,31 @@ func ExampleUpdateBackStagePassesQuality() {
 	fmt.Println(item.Quality)
 	// Output: 11
 }
+
+func TestUpdateConjuredQuality(t *testing.T) {
+	tests := []struct {
+		name            string
+		initialQuality  int
+		expectedQuality int
+	}{
+		{"Quality decreases by 2", 10, 8},
+		{"Quality at 0 stays 0", 0, 0},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			item := &gildedrose.Item{Name: "Conjured Mana Cake", Quality: test.initialQuality}
+			gildedrose.UpdateConjuredQuality(item)
+			if item.Quality != test.expectedQuality {
+				t.Errorf("%s: Expected quality %d but got %d", test.name, test.expectedQuality, item.Quality)
+			}
+		})
+	}
+}
+
+func ExampleUpdateConjuredQuality() {
+	item := &gildedrose.Item{Name: "Conjured Mana Cake", Quality: 10}
+	gildedrose.UpdateConjuredQuality(item)
+	fmt.Println(item.Quality)
+	// Output: 8
+}
