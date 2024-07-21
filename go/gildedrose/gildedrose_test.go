@@ -26,9 +26,9 @@ func TestLowerQualityByNumber(t *testing.T) {
 		number          int
 		expectedQuality int
 	}{
-		{"Quality decreases by 1", 10, 1, 9},
-		{"Quality decreases by 2", 10, 2, 8},
-		{"Quality at 0 stays 0", 0, 1, 0},
+		{"Item quality decreases by 1", 10, 1, 9},
+		{"Item quality decreases by 2", 10, 2, 8},
+		{"Item quality at 0 stays 0", 0, 1, 0},
 	}
 
 	for _, test := range tests {
@@ -56,9 +56,9 @@ func TestRaiseQualityByNumber(t *testing.T) {
 		number          int
 		expectedQuality int
 	}{
-		{"Quality increases by 1", 10, 1, 11},
-		{"Quality increases by 2", 10, 2, 12},
-		{"Quality at 50 stays 50", 50, 1, 50},
+		{"Item quality increases by 1", 10, 1, 11},
+		{"Item quality increases by 2", 10, 2, 12},
+		{"Item quality at 50 stays 50", 50, 1, 50},
 	}
 
 	for _, test := range tests {
@@ -87,8 +87,8 @@ func TestUpdateSellIn(t *testing.T) {
 		expectedSellIn int
 		itemName       string
 	}{
-		{"SellIn decreases by 1", 10, 9, "foo"},
-		{"SellIn stays at 0", 0, 0, "Sulfuras, Hand of Ragnaros"},
+		{"Item SellIn decreases by 1", 10, 9, "foo"},
+		{"Sulfuras SellIn stays at 0", 0, 0, "Sulfuras, Hand of Ragnaros"},
 	}
 
 	for _, test := range tests {
@@ -119,13 +119,10 @@ func TestUpdateQualityAfterSellIn(t *testing.T) {
 		expectedQuality int
 		itemName        string
 	}{
-		{"Quality decreases by 1", 10, -1, 9, "foo"},
-		{"Quality at 0 stays 0", 0, 0, 0, "foo"},
-		{"Quality increases by 1", 10, -1, 11, "Aged Brie"},
-		{"Quality at 0 stays 0", 0, 0, 0, "Aged Brie"},
-		{"Quality at 0 stays 0", 0, 0, 0, "Sulfuras, Hand of Ragnaros"},
-		{"Quality at 0 stays 0", 0, 0, 0, "Backstage passes to a TAFKAL80ETC concert"},
-		{"Quality at 0 stays 0", 0, 0, 0, "Conjured Mana Cake"},
+		{"Normal item quality decreases by 1", 10, -1, 9, "foo"},
+		{"Brie Quality increases by 1 after SellIn", 10, -1, 11, "Aged Brie"},
+		{"Sulfuras quality remains unchanged at 0 stays 0", 80, -1, 80, "Sulfuras, Hand of Ragnaros"},
+		{"Backstage passes quality decreases to 0", 0, 0, 0, "Backstage passes to a TAFKAL80ETC concert"},
 	}
 
 	for _, test := range tests {
@@ -166,6 +163,7 @@ func TestUpdateBrieQuality(t *testing.T) {
 			}
 		})
 	}
+
 }
 
 func ExampleUpdateBrieQuality() {

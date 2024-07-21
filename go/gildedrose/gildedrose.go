@@ -28,7 +28,7 @@ func UpdateQualityAfterSellIn(item *Item) {
 		if item.Name != "Sulfuras, Hand of Ragnaros" {
 			switch item.Name {
 			case "Aged Brie":
-				RaiseQualityByNumber(item, 1)
+				UpdateBrieQuality(item)
 			case "Backstage passes to a TAFKAL80ETC concert":
 				item.Quality = 0
 			default:
