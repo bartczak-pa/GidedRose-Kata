@@ -167,3 +167,34 @@ func ExampleUpdateBrieQuality() {
 	fmt.Println(item.Quality)
 	// Output: 11
 }
+
+func TestUpdateBackStagePassesQuality(t *testing.T) {
+	tests := []struct {
+		name            string
+		initialQuality  int
+		initialSellIn   int
+		expectedQuality int
+	}{
+		{"Quality increases by 1", 10, 20, 11},
+		{"Quality increases by 2", 10, 10, 12},
+		{"Quality increases by 3", 10, 5, 13},
+		{"Quality at 50 stays 50", 50, 20, 50},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			item := &gildedrose.Item{Name: "Backstage passes to a TAFKAL80ETC concert", Quality: test.initialQuality, SellIn: test.initialSellIn}
+			gildedrose.UpdateBackStagePassesQuality(item)
+			if item.Quality != test.expectedQuality {
+				t.Errorf("%s: Expected quality %d but got %d", test.name, test.expectedQuality, item.Quality)
+			}
+		})
+	}
+}
+
+func ExampleUpdateBackStagePassesQuality() {
+	item := &gildedrose.Item{Name: "Backstage passes to a TAFKAL80ETC concert", Quality: 10, SellIn: 20}
+	gildedrose.UpdateBackStagePassesQuality(item)
+	fmt.Println(item.Quality)
+	// Output: 11
+}

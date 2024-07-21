@@ -37,6 +37,18 @@ func UpdateBrieQuality(item *Item) {
 	}
 }
 
+func UpdateBackStagePassesQuality(item *Item) {
+	if item.Quality < 50 {
+		RaiseQualityByNumber(item, 1)
+		if item.SellIn < 11 {
+			UpdateBrieQuality(item)
+		}
+		if item.SellIn < 6 {
+			UpdateBrieQuality(item)
+		}
+	}
+}
+
 func UpdateQuality(items []*Item) {
 	for i := 0; i < len(items); i++ {
 
@@ -44,15 +56,7 @@ func UpdateQuality(items []*Item) {
 			if items[i].Name == "Aged Brie" {
 				UpdateBrieQuality(items[i])
 			} else if items[i].Name == "Backstage passes to a TAFKAL80ETC concert" {
-				if items[i].Quality < 50 {
-					RaiseQualityByNumber(items[i], 1)
-					if items[i].SellIn < 11 {
-						UpdateBrieQuality(items[i])
-					}
-					if items[i].SellIn < 6 {
-						UpdateBrieQuality(items[i])
-					}
-				}
+				UpdateBackStagePassesQuality(items[i])
 			} else {
 				LowerQualityByNumber(items[i], 1)
 			}
