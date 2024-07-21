@@ -18,7 +18,9 @@ func RaiseQualityByNumber(item *Item, number int) {
 }
 
 func UpdateSellIn(item *Item) {
-	item.SellIn = item.SellIn - 1
+	if item.Name != "Sulfuras, Hand of Ragnaros" {
+		item.SellIn = item.SellIn - 1
+	}
 }
 
 func UpdateQualityAfterSellIn(item *Item) {
@@ -69,9 +71,7 @@ func UpdateQuality(items []*Item) {
 			}
 		}
 
-		if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-			UpdateSellIn(items[i])
-		}
+		UpdateSellIn(items[i])
 
 		if items[i].SellIn < 0 {
 			UpdateQualityAfterSellIn(items[i])
