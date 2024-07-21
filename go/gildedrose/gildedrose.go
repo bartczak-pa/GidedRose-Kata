@@ -31,23 +31,32 @@ func UpdateQualityAfterSellIn(item *Item) {
 	}
 }
 
+func UpdateBrieQuality(item *Item) {
+	if item.Quality < 50 {
+		RaiseQualityByNumber(item, 1)
+	}
+}
+
 func UpdateQuality(items []*Item) {
 	for i := 0; i < len(items); i++ {
 
 		if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-			if items[i].Name != "Aged Brie" && items[i].Name != "Backstage passes to a TAFKAL80ETC concert" {
-				LowerQualityByNumber(items[i], 1)
-			} else {
-				RaiseQualityByNumber(items[i], 1)
-				if items[i].Name == "Backstage passes to a TAFKAL80ETC concert" {
+			if items[i].Name == "Aged Brie" {
+				UpdateBrieQuality(items[i])
+			} else if items[i].Name == "Backstage passes to a TAFKAL80ETC concert" {
+				if items[i].Quality < 50 {
+					RaiseQualityByNumber(items[i], 1)
 					if items[i].SellIn < 11 {
-						RaiseQualityByNumber(items[i], 1)
+						UpdateBrieQuality(items[i])
 					}
 					if items[i].SellIn < 6 {
-						RaiseQualityByNumber(items[i], 1)
+						UpdateBrieQuality(items[i])
 					}
 				}
+			} else {
+				LowerQualityByNumber(items[i], 1)
 			}
+
 		}
 
 		if items[i].Name != "Sulfuras, Hand of Ragnaros" {

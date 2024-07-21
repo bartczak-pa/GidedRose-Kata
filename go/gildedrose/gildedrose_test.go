@@ -139,3 +139,31 @@ func ExampleUpdateQualityAfterSellIn() {
 	fmt.Println(item.Quality)
 	// Output: 9
 }
+
+func TestUpdateBrieQuality(t *testing.T) {
+	tests := []struct {
+		name            string
+		initialQuality  int
+		expectedQuality int
+	}{
+		{"Quality increases by 1", 10, 11},
+		{"Quality at 50 stays 50", 50, 50},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			item := &gildedrose.Item{Name: "Aged Brie", Quality: test.initialQuality}
+			gildedrose.UpdateBrieQuality(item)
+			if item.Quality != test.expectedQuality {
+				t.Errorf("%s: Expected quality %d but got %d", test.name, test.expectedQuality, item.Quality)
+			}
+		})
+	}
+}
+
+func ExampleUpdateBrieQuality() {
+	item := &gildedrose.Item{Name: "Aged Brie", Quality: 10}
+	gildedrose.UpdateBrieQuality(item)
+	fmt.Println(item.Quality)
+	// Output: 11
+}
