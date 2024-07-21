@@ -88,7 +88,6 @@ func TestUpdateSellIn(t *testing.T) {
 		itemName       string
 	}{
 		{"SellIn decreases by 1", 10, 9, "foo"},
-		{"SellIn stays at 0", 0, 0, "foo"},
 		{"SellIn stays at 0", 0, 0, "Sulfuras, Hand of Ragnaros"},
 	}
 
@@ -120,10 +119,13 @@ func TestUpdateQualityAfterSellIn(t *testing.T) {
 		expectedQuality int
 		itemName        string
 	}{
-		{"Quality decreases by 1", 10, 0, 9, "foo"},
 		{"Quality decreases by 1", 10, -1, 9, "foo"},
+		{"Quality at 0 stays 0", 0, 0, 0, "foo"},
 		{"Quality increases by 1", 10, -1, 11, "Aged Brie"},
-		{"Quality is 0", 10, -1, 0, "Backstage passes to a TAFKAL80ETC concert"},
+		{"Quality at 0 stays 0", 0, 0, 0, "Aged Brie"},
+		{"Quality at 0 stays 0", 0, 0, 0, "Sulfuras, Hand of Ragnaros"},
+		{"Quality at 0 stays 0", 0, 0, 0, "Backstage passes to a TAFKAL80ETC concert"},
+		{"Quality at 0 stays 0", 0, 0, 0, "Conjured Mana Cake"},
 	}
 
 	for _, test := range tests {
@@ -135,11 +137,10 @@ func TestUpdateQualityAfterSellIn(t *testing.T) {
 			}
 		})
 	}
-
 }
 
 func ExampleUpdateQualityAfterSellIn() {
-	item := &gildedrose.Item{Name: "foo", Quality: 10, SellIn: 0}
+	item := &gildedrose.Item{Name: "foo", Quality: 10, SellIn: -1}
 	gildedrose.UpdateQualityAfterSellIn(item)
 	fmt.Println(item.Quality)
 	// Output: 9
