@@ -53,14 +53,20 @@ func UpdateQuality(items []*Item) {
 	for i := 0; i < len(items); i++ {
 
 		if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-			if items[i].Name == "Aged Brie" {
-				UpdateBrieQuality(items[i])
-			} else if items[i].Name == "Backstage passes to a TAFKAL80ETC concert" {
-				UpdateBackStagePassesQuality(items[i])
-			} else {
-				LowerQualityByNumber(items[i], 1)
+			switch items[i].Name {
+			case "Aged Brie":
+				{
+					UpdateBrieQuality(items[i])
+				}
+			case "Backstage passes to a TAFKAL80ETC concert":
+				{
+					UpdateBackStagePassesQuality(items[i])
+				}
+			default:
+				{
+					LowerQualityByNumber(items[i], 1)
+				}
 			}
-
 		}
 
 		if items[i].Name != "Sulfuras, Hand of Ragnaros" {
