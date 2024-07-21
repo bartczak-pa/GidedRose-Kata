@@ -108,7 +108,7 @@ func ExampleUpdateSellIn() {
 	// Output: 9
 }
 
-func TextUpdateQualityAfterSellIn(t *testing.T) {
+func TestUpdateQualityAfterSellIn(t *testing.T) {
 	tests := []struct {
 		name            string
 		itemName        string
