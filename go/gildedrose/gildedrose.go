@@ -24,12 +24,17 @@ func UpdateSellIn(item *Item) {
 }
 
 func UpdateQualityAfterSellIn(item *Item) {
-	if item.Name == "Aged Brie" {
-		RaiseQualityByNumber(item, 1)
-	} else if item.Name == "Backstage passes to a TAFKAL80ETC concert" {
-		item.Quality = 0
-	} else if item.Name != "Sulfuras, Hand of Ragnaros" {
-		LowerQualityByNumber(item, 1)
+	if item.SellIn < 0 {
+		if item.Name != "Sulfuras, Hand of Ragnaros" {
+			switch item.Name {
+			case "Aged Brie":
+				RaiseQualityByNumber(item, 1)
+			case "Backstage passes to a TAFKAL80ETC concert":
+				item.Quality = 0
+			default:
+				LowerQualityByNumber(item, 1)
+			}
+		}
 	}
 }
 
@@ -57,24 +62,14 @@ func UpdateQuality(items []*Item) {
 		if items[i].Name != "Sulfuras, Hand of Ragnaros" {
 			switch items[i].Name {
 			case "Aged Brie":
-				{
-					UpdateBrieQuality(items[i])
-				}
+				UpdateBrieQuality(items[i])
 			case "Backstage passes to a TAFKAL80ETC concert":
-				{
-					UpdateBackStagePassesQuality(items[i])
-				}
+				UpdateBackStagePassesQuality(items[i])
 			default:
-				{
-					LowerQualityByNumber(items[i], 1)
-				}
+				LowerQualityByNumber(items[i], 1)
 			}
 		}
-
 		UpdateSellIn(items[i])
-
-		if items[i].SellIn < 0 {
-			UpdateQualityAfterSellIn(items[i])
-		}
+		UpdateQualityAfterSellIn(items[i])
 	}
 }
